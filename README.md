@@ -1,95 +1,63 @@
-# Lab: Testing using Vitest
+# Lab: Testing Using Vitest
 
 ## Overview
-Now that you have covered creating a testing suite, we can use the key principles of test-driven development to work with an existing app. Normally, you would build the testing while developing, but you were recently brought onto this project to add a testing suite! You are working to implement a testing suite for a banking application that allows users to track their expenditures by submitting and searching through them.
+This lab implements a testing suite for an existing banking application that allows users to track expenditures by submitting and searching through transactions. The app was already built — the job was to add comprehensive tests using Vitest and fix a missing search feature to make the tests pass.
 
-## Task 1: Define the Problem
-- Build a testing suite for an existing application.
+## Screenshot
 
-## Task 2: Determine the Design
-- Identify the key features of this project.
+![App Screenshot](./screenshot.png)
 
-## Task 3: Develop the Code
-- One feature needs to be completed: the search functionality.
+## Setup
 
-## Task 4: Test and Refine
-- Build a test suite using Vitest to test key features:
-  - Display transactions
-  - Add transactions
-  - Search transactions and sort transactions
+Run `npm install` to install dependencies.
 
-## Task 5: Document and Maintain
-- Commit as you go, writing meaningful commit messages.
-- Push commit history to GitHub periodically and when the lab is complete.
+Start the backend:
+
+```bash
+npm run server
+```
+
+Start the frontend:
+
+```bash
+npm run dev
+```
+
+Run the test suite:
+
+```bash
+npm run test
+```
+
+## Features Tested
+
+- **Display Transactions** — Verifies all transactions load from the backend on startup.
+- **Add Transactions** — Verifies new transactions appear on the frontend and that a POST request is made to the backend.
+- **Search Transactions** — Verifies the transaction list filters in real time based on search input, including case-insensitive matching and clearing the search.
+
+## Test Suites
+
+| Suite | File | Tests |
+|---|---|---|
+| Display Transactions | `DisplayTransactions.test.jsx` | Loads on startup, shows all transactions, correct details, empty state |
+| Add Transactions | `AddTransactions.test.jsx` | Adds to frontend, makes POST request, no duplicates |
+| Search & Sort | `SearchSort.test.jsx` | Filters on input, clears correctly, case insensitive, no match state |
+
+## What Was Fixed
+
+The `AccountContainer` component was missing the search filter logic. The filtered transactions are now computed from state and passed to `TransactionsList`, making the search input functional and all tests passing.
+
+The `AddTransactionForm` component was updated to use `e.target.elements` instead of `e.target` to access form fields, which is required for compatibility with jsdom in the test environment.
 
 ## Tools and Resources
-- Vitest: [Vitest Documentation](https://vitest.dev/guide/)
 
-## Instructions
+- [Vitest Documentation](https://vitest.dev/guide/)
+- [Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 
-### Set Up
-Before we begin coding, let's complete the initial setup for this lesson:
+## Best Practices
+- Tests are organized into separate suites per feature.
+- `beforeEach` used to reset mock fetch responses between tests.
+- No unnecessary console logs or commented-out code.
 
-#### Fork and Clone
-1. Go to the provided GitHub repository link.
-2. Fork the repository to your GitHub account.
-3. Clone the forked repository to your local machine.
-
-#### Open and Run File
-1. Open the project in VSCode.
-2. Run `npm install` to install all necessary dependencies.
-
-### Instructions
-#### Task 1: Define the Problem
-- Build a testing suite for an existing application.
-
-#### Task 2: Determine the Design
-- Identify the key features of this project.
-
-#### Task 3: Develop, Test, and Refine the Code
-
-1. Open the React application in the browser:
-   ```sh
-   npm run dev
-   ```
-2. Run the included backend:
-   ```sh
-   npm run server
-   ```
-3. Create a test branch.
-
-#### Display Transactions Test
-- Create a test suite that will test if transactions are displayed on startup.
-
-#### Add Transactions Test
-- Create a test suite that will test:
-  - If new transactions are added to the frontend.
-  - If a POST request was called.
-
-#### Search Transactions and Sort Transactions Test
-- Create a test suite that will test:
-  - If a change event is triggered, the page updates accordingly.
-  - Search is incomplete, so build out the search functionality based on the test.
-
-4. Push the feature branch and open a PR on GitHub.
-5. Merge to `main`.
-
-### Task 4: Document and Maintain
-#### Best Practice Documentation Steps:
-- Add comments to the code to explain purpose and logic.
-- Clarify intent/functionality of code for other developers.
-- Add screenshots of completed work included in Markdown in `README.md`.
-- Update `README.md` to reflect the functionality of the application following [Make a README](https://makeareadme.com).
-- Delete any stale branches on GitHub.
-- Remove unnecessary/commented-out code.
-- If needed, update `.gitignore` to remove sensitive data.
-
-### Submission
-- Once the test suite is built, submit the link to the GitHub repository on Canvas.
-
-### Grading Criteria
-- The application has test suites.
-- The application tests if transactions display on load.
-- The application tests if a new transaction can be added.
-- The application tests if search functionality updates the page correctly.
-
+## Submission
+Once all tests pass and code is pushed to GitHub, submit the repo through Canvas using CodeGrade.
